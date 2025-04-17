@@ -1,0 +1,36 @@
+name: Streamlit Deploy
+
+on:
+  push:
+    branches:
+      - main  # Or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Or the appropriate OS if different
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Specify your Python version
+
+      # Step 3: Install dependencies from requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Install cryptography explicitly (if needed)
+      - name: Install cryptography
+        run: pip install cryptography
+
+      # Step 5: Deploy Streamlit app
+      - name: Deploy Streamlit app
+        run: |
+          streamlit run encryption.py  # Replace with your app's script name (e.g., app.py)
